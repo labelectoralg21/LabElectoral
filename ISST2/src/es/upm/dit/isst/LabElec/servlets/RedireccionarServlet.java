@@ -2,6 +2,7 @@ package es.upm.dit.isst.LabElec.servlets;
 
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import es.upm.dit.isst.LabElec.calculadoras.CalcDhontCCAA;
 import es.upm.dit.isst.LabElec.calculadoras.CalcDhontPais;
 import es.upm.dit.isst.LabElec.calculadoras.CalcDhontProv;
+import es.upm.dit.isst.LabElec.calculadoras.CalcFile;
 import es.upm.dit.isst.LabElec.calculadoras.CalcLagueCCAA;
 import es.upm.dit.isst.LabElec.calculadoras.CalcLaguePais;
 import es.upm.dit.isst.LabElec.calculadoras.CalcLagueProv;
@@ -36,79 +38,166 @@ public class RedireccionarServlet extends HttpServlet {
 		String ley = req.getParameter("ley");
 		String ano = req.getParameter("ano");
 		String circu = req.getParameter("circu");
-
+		String est = req.getParameter("est");
 		List<Partido> list = new ArrayList<>();
+		File f = (File) req.getSession().getAttribute("file");
 		
 //		CalcDhontProv calc = new CalcDhontProv(2016);
 //		List<Partido> list = calc.calcular();
-		
-		if(ley.contentEquals("D'Hont")) {
-			if(ano.contentEquals("2016")) {
+		if(f != null) {
+			CalcFile c = new CalcFile();
+			if(ley.contentEquals("D'Hont")) {
 				if(circu.contentEquals("provincia")) {
-					CalcDhontProv calc = new CalcDhontProv(2016);
-					list = calc.calcular();
-					
+					try {
+						list = c.calcDhontProv(f);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if(circu.contentEquals("comunidad")) {
-					CalcDhontCCAA calc = new CalcDhontCCAA(2016);
-					list = calc.calcular();
+					try {
+						list = c.calcDhontCCAA(f);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if(circu.contentEquals("pais")) {
-					CalcDhontPais calc = new CalcDhontPais(2016);
-					list = calc.calcular();
+					try {
+						list = c.calcDhontPais(f);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
-			if(ano.contentEquals("2015")) {
+			if(ley.contentEquals("Saint Lagüe")) {
 				if(circu.contentEquals("provincia")) {
-					CalcDhontProv calc = new CalcDhontProv(2015);
-					list = calc.calcular();
-					
+					try {
+						list = c.calcLagueProv(f);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if(circu.contentEquals("comunidad")) {
-					CalcDhontCCAA calc = new CalcDhontCCAA(2015);
-					list = calc.calcular();
+					try {
+						list = c.calcLagueCCAA(f);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if(circu.contentEquals("pais")) {
-					CalcDhontPais calc = new CalcDhontPais(2015);
-					list = calc.calcular();
+					try {
+						list = c.calcLaguePais(f);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
+		}else {
+			if(ley.contentEquals("D'Hont")) {
+				if(ano.contentEquals("1982")) {
+					if(circu.contentEquals("provincia")) {
+						CalcDhontProv calc = new CalcDhontProv(1982);
+						list = calc.calcular();
+						
+					}
+					if(circu.contentEquals("comunidad")) {
+						CalcDhontCCAA calc = new CalcDhontCCAA(1982);
+						list = calc.calcular();
+					}
+					if(circu.contentEquals("pais")) {
+						CalcDhontPais calc = new CalcDhontPais(1982);
+						list = calc.calcular();
+					}
+				}
+				if(ano.contentEquals("2016")) {
+					if(circu.contentEquals("provincia")) {
+						CalcDhontProv calc = new CalcDhontProv(2016);
+						list = calc.calcular();
+						
+					}
+					if(circu.contentEquals("comunidad")) {
+						CalcDhontCCAA calc = new CalcDhontCCAA(2016);
+						list = calc.calcular();
+					}
+					if(circu.contentEquals("pais")) {
+						CalcDhontPais calc = new CalcDhontPais(2016);
+						list = calc.calcular();
+					}
+				}
+				if(ano.contentEquals("2015")) {
+					if(circu.contentEquals("provincia")) {
+						CalcDhontProv calc = new CalcDhontProv(2015);
+						list = calc.calcular();
+						
+					}
+					if(circu.contentEquals("comunidad")) {
+						CalcDhontCCAA calc = new CalcDhontCCAA(2015);
+						list = calc.calcular();
+					}
+					if(circu.contentEquals("pais")) {
+						CalcDhontPais calc = new CalcDhontPais(2015);
+						list = calc.calcular();
+					}
+				}
 
+			}
+			
+			if(ley.contentEquals("Saint Lagüe")) {
+				if(ano.contentEquals("1982")) {
+					if(circu.contentEquals("provincia")) {
+						CalcLagueProv calc = new CalcLagueProv(1982);
+						list = calc.calcular();
+						
+					}
+					if(circu.contentEquals("comunidad")) {
+						CalcLagueCCAA calc = new CalcLagueCCAA(1982);
+						list = calc.calcular();
+					}
+					if(circu.contentEquals("pais")) {
+						CalcLaguePais calc = new CalcLaguePais(1982);
+						list = calc.calcular();
+					}
+				}
+				if(ano.contentEquals("2016")) {
+					if(circu.contentEquals("provincia")) {
+						CalcLagueProv calc = new CalcLagueProv(2016);
+						list = calc.calcular();
+						
+					}
+					if(circu.contentEquals("comunidad")) {
+						CalcLagueCCAA calc = new CalcLagueCCAA(2016);
+						list = calc.calcular();
+					}
+					if(circu.contentEquals("pais")) {
+						CalcLaguePais calc = new CalcLaguePais(2016);
+						list = calc.calcular();
+					}
+				}
+				if(ano.contentEquals("2015")) {
+					if(circu.contentEquals("provincia")) {
+						CalcLagueProv calc = new CalcLagueProv(2015);
+						list = calc.calcular();
+						
+					}
+					if(circu.contentEquals("comunidad")) {
+						CalcLagueCCAA calc = new CalcLagueCCAA(2015);
+						list = calc.calcular();
+					}
+					if(circu.contentEquals("pais")) {
+						CalcLaguePais calc = new CalcLaguePais(2015);
+						list = calc.calcular();
+					}
+				}
+
+			}
 		}
 		
-		if(ley.contentEquals("Saint Lagüe")) {
-			if(ano.contentEquals("2016")) {
-				if(circu.contentEquals("provincia")) {
-					CalcLagueProv calc = new CalcLagueProv(2016);
-					list = calc.calcular();
-					
-				}
-				if(circu.contentEquals("comunidad")) {
-					CalcLagueCCAA calc = new CalcLagueCCAA(2016);
-					list = calc.calcular();
-				}
-				if(circu.contentEquals("pais")) {
-					CalcLaguePais calc = new CalcLaguePais(2016);
-					list = calc.calcular();
-				}
-			}
-			if(ano.contentEquals("2015")) {
-				if(circu.contentEquals("provincia")) {
-					CalcLagueProv calc = new CalcLagueProv(2015);
-					list = calc.calcular();
-					
-				}
-				if(circu.contentEquals("comunidad")) {
-					CalcLagueCCAA calc = new CalcLagueCCAA(2015);
-					list = calc.calcular();
-				}
-				if(circu.contentEquals("pais")) {
-					CalcLaguePais calc = new CalcLaguePais(2015);
-					list = calc.calcular();
-				}
-			}
-
-		}
 		
 		List<Partido> listEsc = new ArrayList<>();
 		List<Partido> listVotos = new ArrayList<>();
@@ -255,12 +344,23 @@ public class RedireccionarServlet extends HttpServlet {
 		req.getSession().setAttribute("circu", circu);
 		req.getSession().setAttribute("ley", ley);
 		req.getSession().setAttribute("res", list);
+		req.getSession().setAttribute("est", est);
+
 		//req.getSession().setAttribute("resgraficos", listEsc);
 
-		resp.sendRedirect(req.getContextPath()+ "/ResultadosGenerales.jsp");
+		if(f != null) {
+
+				resp.sendRedirect(req.getContextPath()+ "/ResultadosGenerales.jsp");
+			
+		}else {
+			if(est.equals("mapacom")) {
+				resp.sendRedirect(req.getContextPath()+ "/MapaComunidades.jsp");
+			}else {
+				resp.sendRedirect(req.getContextPath()+ "/ResultadosGenerales.jsp");
+			}		
 		}
-		
-		
+
+	}
 	}
 
 //}

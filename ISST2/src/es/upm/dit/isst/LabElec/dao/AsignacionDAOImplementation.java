@@ -50,7 +50,9 @@ public class AsignacionDAOImplementation implements AsignacionDAO {
 		}finally {
 			session.close();
 		}
-		return asignacion.getEscannos();
+		if(asignacion!=null)
+			return asignacion.getEscannos();
+		return 0;
 	}
 
 	@Override

@@ -23,7 +23,9 @@
 
 <h1 style="margin-left: 20%; color: red">LEY ELEGIDA: ${ley}</h1>
 
-<h2 style="margin-left: 5%;">AÑO ELEGIDO: ${ano}</h2>
+<c:if test="${file == null}">
+	<h2 style="margin-left: 5%;">AÑO ELEGIDO: ${ano}</h2>
+</c:if>
 <h2 style="margin-left: 5%;">CIRCUNSCRIPCIÓN ELEGIDA: ${circu}</h2>
 
 
@@ -50,7 +52,17 @@
   
   <div class="col-sm-4">
   
-   <a href="CalcularServlet" class="btn btn-danger">Comunidades</a><br>
+<form action="ComunidadesServlet">
+ 	<input type="hidden" name="ano" value="${ano}"/>
+  	<input type="hidden" name="ley" value="${ley}"/>
+  	<input type="hidden" name="circu" value="${circu}"/>
+  	
+  	<c:if test="${file == null}">
+  	
+ 		<button type="submit" class="btn btn-danger">Comunidades</button>
+ 	</c:if>
+ 		
+</form>
    <a href="LaboratorioElectoral.jsp" class="btn btn-danger">Volver</a>
   
   </div>

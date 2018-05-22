@@ -18,5 +18,6 @@
 		<mapping class="es.upm.dit.isst.LabElec.dao.model.Circunscripcion"/>
 		<mapping class="es.upm.dit.isst.LabElec.dao.model.ResultadosVotos"/>
 		<mapping class="es.upm.dit.isst.LabElec.dao.model.Asignacion"/>
+		<mapping class="es.upm.dit.isst.LabElec.dao.model.Usuario"/>
 	</session-factory>
 </hibernate-configuration>

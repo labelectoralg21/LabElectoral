@@ -42,7 +42,7 @@ public class CircunscripcionDAOImplementation implements CircunscripcionDAO{
 		Circunscripcion circunscripcion = null;
 		try {
 			session.beginTransaction();
-			session.get(Circunscripcion.class,nombre);
+			circunscripcion = session.get(Circunscripcion.class,nombre);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
